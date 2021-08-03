@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Outil de test des développeurs" %}
+
+{% block title %}{{ parent() ~ " - " ~ title }}{% endblock %}
+
+{% block body %}
+
+<div>
+    <h1>{{ title }}</h1>
+
+    <h2>But de l'expérience</h2>
+    <div>
+        Le but de ce travail et de tester les points suivants :
+
+        <ul>
+            <li>Connaitre ta capacité d'adaptation sur un nouvel environnement.</li>
+            <li>Savoir si tu peux mener à bien une tâche en te servant des informations fournies et/ou à ta disposition.</li>
+            <li>Voir si tu es capable de te débrouiller par toi même en te servant de tous les outils que tu as sous la main (internet est ton ami).</li>
+            <li>Vérifier la qualité de ton code et ta façon d'aborder les sujets. <span class="text-info">L'approche la plus simple est souvent la meilleure 🤖</span></li>
+        </ul>
+    </div>
+
+    <h2>Installation</h2>
+    <p class="text-info">Libre à toi de choisir la manière dont tu veux installer le projet.</p>
+    <div>Tu auras toutefois besoin de quelques outils (tu postules quand même pour un poste de dev Back Symfony)</div>
+    <ul>
+        <li>Php >= 7.3 <span class="text-warning">(requis)</span></li>
+        <li>Extension Php SQLite <span class="text-warning">(requis)</span></li>
+        <li>Composer <span class="text-warning">(requis)</span></li>
+        <li>Yarn <span class="text-warning">(requis pour les compilations JS via Webpack Encore)</span> <span class="text-info">(optionnel si le JS est intégré dans la vue)</span></li>
+        <li>Symfony cli <span class="text-info">(optionnel)</span></li>
+    </ul>
+    <p>
+        Une fois les prérequis en place. Tu peux mettre ne place ton projet, Apache, NGINX, Symfony Server,... fais comme il te plait.<br>
+        Lance un <code>composer install</code> et tout devrait rouler, dans le cas contraire n'hésite pas à nous contacter.
+    </p>
+
+    <h2>Exercices</h2>
+    <p>Tu trouveras les informations relatives aux exercices dans les controller/vues concernées. Une fois de plus, en cas de doute n'hésite pas à nous contacter.</p>
+
+    <h2>Rendu du travail</h2>
+    <p>Quand tu auras fini tes exercices, merci de nous renvoyer un zip du projet en excluant le dossier vendor.</p>
+
+    <p>Bonne chance à toi !</p>
+</div>
+{% endblock %}

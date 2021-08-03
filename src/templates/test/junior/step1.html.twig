@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Exercice 1 : Meilleures ventes par marque" %}
+
+{% block title %}{{ parent() ~ " - Junior - " ~ title }}{% endblock %}
+
+{% block body %}
+<div>
+    <h1>{{  title }}</h1>
+
+    <p>Écrire une fonction qui renvoie un tableau contenant toutes les meilleures ventes par marque.
+    Pour simplifier, on considère que tous les produits ont un nombre de ventes différent.</p>
+
+    <div class="row">
+        <div class="col-6">
+            <p class="text-info">En entrée : un array contenant tous nos produits.</p>
+
+            <ul>
+                {% for product in products %}
+                    <li>[<strong>{{ product.brand.name }}</strong>] {{ product.name }} : {{ product.sellCount }} ventes</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6">
+            <p class="text-info">En sortie : un array contenant le produit ayant la meilleur vente pour chaque marque.</p>
+
+            <ul>
+                {% for brand,product in results %}
+                    <li>[<strong>{{ brand }}</strong>] {{ product.product }} : {{ product.sellCount }} ventes</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

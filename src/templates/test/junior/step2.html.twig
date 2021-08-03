@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Exercice 2 : Création de formulaire" %}
+
+{% block title %}{{ parent() ~ " - Junior - " ~ title }}{% endblock %}
+
+{% block body %}
+<div>
+    <h1>{{ title }}</h1>
+
+    <p>
+        Mettre en place un formulaire de création/édition de marque avec la possibilité d'y ajouter des produits ainsi que le nombre de ventes associées.<br>
+        <span class="text-danger">⚠ Les données doivent êtres persistées sur l'entité Brand.</span>
+    </p>
+    <p>La création et l'édition doivent être gérés dans la même action de controller. <code>JuniorController/step2</code></p>
+    <p class="text-info">La mise en forme n'a pas d'importance.</p>
+
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Editer</th>
+                        <th>Ajouter un produit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for brand in brands %}
+                    <tr>
+                        <td>
+                            <input id="edit-brand-{{ brand.id }}" type="text" value="{{ brand.name }}"  placeholder="Marque">
+                        </td>
+                        <td>
+                            <button id="btn-edit-{{ brand.id }}" class="btn btn-warning" onclick="editBrandName({{ brand.id }})">Editer</button>
+                        </td>
+                        <td>
+                            <input id="new-product-name-{{ brand.id }}" type="text" placeholder="Nom du produit">
+                            <input id="new-product-sell-count-{{ brand.id }}" type="number"  placeholder="Nombre de ventes">
+                            <button id="btn-new-product-{{ brand.id }}" class="btn btn-success" onclick="addProductToBrand({{ brand.id }})"><i class="fa fa-plus"></i></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        <input id="new-brand-name" type="text" value="" placeholder="Marque">
+                    </td>
+                    <td>
+                        <button id="btn-add" class="btn btn-success" onclick="addBrand()">Ajouter</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script lang="js">
+        async function editBrandName(brandId) {
+            const button = document.getElementById('btn-edit-'+brandId);
+            button.setAttribute('disabled', 'disabled');
+
+            const brandName = document.getElementById('edit-brand-'+brandId).value;
+
+            const url = "{{ path('test_junior_step_2') }}"
+            const settings = {
+                method: 'PATCH',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: brandId,
+                    name: brandName
+                })
+            };
+
+            try {
+                await fetch(url, settings);
+                location.reload()
+            } catch (e) {
+                button.removeAttribute('disabled');
+            }
+        }
+
+        async function addBrand(){
+            const button = document.getElementById('btn-add');
+            button.setAttribute('disabled', 'disabled');
+
+            const url = "{{ path('test_junior_step_2') }}"
+
+            const brandName = document.getElementById('new-brand-name').value;
+
+            const settings = {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: brandName
+                })
+            };
+
+            try {
+                await fetch(url, settings);
+                location.reload()
+            } catch (e) {
+                button.removeAttribute('disabled');
+            }
+        }
+
+        async function addProductToBrand(brandId){
+            const button = document.getElementById('btn-new-product-'+brandId);
+            button.setAttribute('disabled', 'disabled');
+
+            const url = "{{ path('test_junior_step_2') }}";
+
+            const productName = document.getElementById('new-product-name-'+brandId).value;
+            const productSellCount = document.getElementById('new-product-sell-count-'+brandId).value;
+
+            const settings = {
+                method: 'PATCH',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: brandId,
+                    productName: productName,
+                    productSellCount: productSellCount
+                })
+            };
+
+            try {
+                await fetch(url, settings);
+                location.reload()
+            } catch (e) {
+                button.removeAttribute('disabled');
+            }
+        }
+    </script>
+{% endblock %}
