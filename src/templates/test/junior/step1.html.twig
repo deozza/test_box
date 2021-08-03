@@ -17,7 +17,7 @@
 
             <ul>
                 {% for product in products %}
-                    <li>[<strong>{{ product.brand.name }}</strong>] {{ product.name }} : {{ product.sellCount }} ventes</li>
+                    <li>[<strong>{{ product.brand }}</strong>] {{ product.product }} : {{ product.sellCount }} ventes</li>
                 {% endfor %}
             </ul>
         </div>

@@ -27,11 +27,16 @@ class UseCase
         $this->em = $em;
     }
 
+    public function getProductsSoldPerBrands(): array {
+        return $this->em->getRepository(Product::class)->getProductsSoldPerBrands();
+
+    }
+
     /**
      * @return array
      */
     public function getMostSoldProductPerBrands(): array {
-        return $this->em->getRepository(Product::class)->getMostSoldProducstPerBrand();
+        return $this->em->getRepository(Product::class)->getMostSoldProductPerBrand();
     }
 
     /**

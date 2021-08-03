@@ -48,7 +48,7 @@ class JuniorController extends AbstractController
      */
     public function step1()
     {
-        $products = $this->em->getRepository(Product::class)->findAll();
+        $products = $this->brandUseCase->getProductsSoldPerBrands();
 
         // Ici ta fonction de tri des ventes
         $mostSoldProductsPerBrand = $this->brandUseCase->getMostSoldProductPerBrands();

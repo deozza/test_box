@@ -19,11 +19,21 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function getMostSoldProducstPerBrand(){
+    public function getProductsSoldPerBrands(){
+        $qb = $this->createQueryBuilder('p')
+            ->select('p.name product', 'p.sellCount sellCount', 'b.name brand')
+            ->innerJoin('p.brand', 'b')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getMostSoldProductPerBrand(){
         $qb = $this->createQueryBuilder('p')
             ->select('p.name product', 'MAX(p.sellCount) sellCount', 'b.name brand')
             ->innerJoin('p.brand', 'b')
-            ->groupBy('b.name');
+            ->groupBy('b.name')
+        ;
 
         return $qb->getQuery()->getResult();
     }
