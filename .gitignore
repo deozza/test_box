@@ -1,0 +1,5 @@
+src/.idea/
+src/vendor/
+src/var/log/*
+src/var/cache/*
+src/node_modules/
