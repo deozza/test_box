@@ -3,16 +3,16 @@
 
 namespace App\Service\Brand;
 
-use App\Form\Test\Junior\Brand\Add\AddBrand;
-use App\Form\Test\Junior\Brand\Edit\EditBrand;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 
 use App\Entity\Brand;
 use App\Entity\Product;
 use App\Service\Utils\UseCaseResults\Result;
+use App\Form\Test\Junior\Brand\Add\AddBrand;
+use App\Form\Test\Junior\Brand\Edit\EditBrand;
 
-class UseCase
+class UseCase implements BrandUseCaseInterface
 {
     /**
      * @var EntityManagerInterface $em
@@ -60,6 +60,7 @@ class UseCase
         $newBrand->setName($addBrand->getName());
 
         $this->em->persist($newBrand);
+        $this->em->flush();
 
         $result->setSuccess('CREATED', 201);
         return $result;
@@ -89,6 +90,8 @@ class UseCase
         }
 
         $brand->setName($editBrand->getName());
+
+        $this->em->flush();
 
         $result->setSuccess('EDITED', 200);
         return $result;
@@ -123,6 +126,7 @@ class UseCase
         $product->setBrand($brand);
 
         $this->em->persist($product);
+        $this->em->flush();
 
         $result->setSuccess('EDITED', 200);
         return $result;

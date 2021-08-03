@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\Product;
 
-class UseCase
+class UseCase implements ProductUseCaseInterface
 {
     /**
      * @var EntityManagerInterface $em

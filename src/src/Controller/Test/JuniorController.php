@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Entity\Brand;
 use App\Service\Brand\UseCase as BrandUseCase;
 use App\Service\Product\UseCase as ProductUseCase;
 use App\Form\Test\Junior\Brand\Add\AddBrand;
@@ -33,20 +32,14 @@ class JuniorController extends AbstractController
     private $productUseCase;
 
     /**
-     * @var EntityManagerInterface $em
-     */
-    private $em;
-
-    /**
      * JuniorController constructor.
      * @param BrandUseCase $brandUseCase
      * @param ProductUseCase $productUseCase
      * @param EntityManagerInterface $em
      */
-    public function __construct(BrandUseCase $brandUseCase, ProductUseCase $productUseCase, EntityManagerInterface $em){
+    public function __construct(BrandUseCase $brandUseCase, ProductUseCase $productUseCase){
         $this->brandUseCase = $brandUseCase;
         $this->productUseCase = $productUseCase;
-        $this->em = $em;
     }
 
     /**
@@ -87,7 +80,6 @@ class JuniorController extends AbstractController
                 $this->addFlash('danger',json_encode($result->errors));
             }else{
                 $this->addFlash('success', 'Une nouvelle marque a été ajoutée');
-                $this->em->flush();
             }
 
             return $this->render('test/junior/step2.html.twig', [
@@ -109,7 +101,6 @@ class JuniorController extends AbstractController
                 $this->addFlash('danger', json_encode($result->errors));
             }else{
                 $this->addFlash('success', 'La marque a été modifiée');
-                $this->em->flush();
             }
 
             return $this->render('test/junior/step2.html.twig', [
