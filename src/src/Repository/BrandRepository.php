@@ -20,6 +20,23 @@ class BrandRepository extends ServiceEntityRepository
     }
 
 
+    public function getMostSoldProductPerBrand(){
+        $qb = $this->createQueryBuilder('b')
+            ->select('p.name product', 'MAX(p.sellCount) sellCount', 'b.name brand')
+            ->innerJoin('b.products', 'p')
+            ->groupBy('b.name')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getBrandsNameAndId(){
+        $qb = $this->createQueryBuilder('b')
+            ->select('b.name', 'b.id')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 
     // /**
     //  * @return Brand[] Returns an array of Brand objects

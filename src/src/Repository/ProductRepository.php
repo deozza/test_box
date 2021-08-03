@@ -28,16 +28,6 @@ class ProductRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getMostSoldProductPerBrand(){
-        $qb = $this->createQueryBuilder('p')
-            ->select('p.name product', 'MAX(p.sellCount) sellCount', 'b.name brand')
-            ->innerJoin('p.brand', 'b')
-            ->groupBy('b.name')
-        ;
-
-        return $qb->getQuery()->getResult();
-    }
-
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

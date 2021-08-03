@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Brand;
-use App\Entity\Product;
 use App\Service\Brand\UseCase as BrandUseCase;
+use App\Service\Product\UseCase as ProductUseCase;
 use App\Form\Test\Junior\Brand\Add\AddBrand;
 use App\Form\Test\Junior\Brand\Add\AddBrandType;
 use App\Form\Test\Junior\Brand\Edit\EditBrand;
@@ -28,6 +28,11 @@ class JuniorController extends AbstractController
     private $brandUseCase;
 
     /**
+     * @var ProductUseCase $productUseCase
+     */
+    private $productUseCase;
+
+    /**
      * @var EntityManagerInterface $em
      */
     private $em;
@@ -35,9 +40,12 @@ class JuniorController extends AbstractController
     /**
      * JuniorController constructor.
      * @param BrandUseCase $brandUseCase
+     * @param ProductUseCase $productUseCase
+     * @param EntityManagerInterface $em
      */
-    public function __construct(BrandUseCase $brandUseCase, EntityManagerInterface $em){
+    public function __construct(BrandUseCase $brandUseCase, ProductUseCase $productUseCase, EntityManagerInterface $em){
         $this->brandUseCase = $brandUseCase;
+        $this->productUseCase = $productUseCase;
         $this->em = $em;
     }
 
@@ -48,7 +56,7 @@ class JuniorController extends AbstractController
      */
     public function step1()
     {
-        $products = $this->brandUseCase->getProductsSoldPerBrands();
+        $products = $this->productUseCase->getProductsSoldPerBrands();
 
         // Ici ta fonction de tri des ventes
         $mostSoldProductsPerBrand = $this->brandUseCase->getMostSoldProductPerBrands();
@@ -66,7 +74,7 @@ class JuniorController extends AbstractController
      */
     public function step2(Request $request)
     {
-        $brands = $this->em->getRepository(Brand::class)->findAll();
+        $brands = $this->brandUseCase->getBrandsNameAndId();
 
         $payload = json_decode($request->getContent(), true);
 
