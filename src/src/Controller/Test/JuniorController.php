@@ -2,8 +2,7 @@
 
 namespace App\Controller\Test;
 
-use App\Form\Test\Junior\Brand\Edit\EditBrand;
-use App\Form\Test\Junior\Brand\Edit\EditBrandType;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +13,8 @@ use App\Entity\Product;
 use App\Service\Brand\UseCase as BrandUseCase;
 use App\Form\Test\Junior\Brand\Add\AddBrand;
 use App\Form\Test\Junior\Brand\Add\AddBrandType;
-use App\Form\Test\Junior\Brand\Edit\AddProductToBrand;
-use App\Form\Test\Junior\Brand\Edit\AddProductToBrandType;
-
+use App\Form\Test\Junior\Brand\Edit\EditBrand;
+use App\Form\Test\Junior\Brand\Edit\EditBrandType;
 /**
  * Class JuniorController
  *
@@ -53,7 +51,7 @@ class JuniorController extends AbstractController
         $products = $this->em->getRepository(Product::class)->findAll();
 
         // Ici ta fonction de tri des ventes
-        $mostSoldProductsPerBrand = $this->brandUseCase->getMostSoldProductPerBrands($products);
+        $mostSoldProductsPerBrand = $this->brandUseCase->getMostSoldProductPerBrands();
 
         return $this->render('test/junior/step1.html.twig', [
             'products' => $products,

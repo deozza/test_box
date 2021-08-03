@@ -25,8 +25,8 @@
             <p class="text-info">En sortie : un array contenant le produit ayant la meilleur vente pour chaque marque.</p>
 
             <ul>
-                {% for brand,product in results %}
-                    <li>[<strong>{{ brand }}</strong>] {{ product.product }} : {{ product.sellCount }} ventes</li>
+                {% for product in results %}
+                    <li>[<strong>{{ product.brand }}</strong>] {{ product.product }} : {{ product.sellCount }} ventes</li>
                 {% endfor %}
             </ul>
         </div>

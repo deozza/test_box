@@ -28,25 +28,10 @@ class UseCase
     }
 
     /**
-     * @param Product[] $products
      * @return array
      */
-    public function getMostSoldProductPerBrands(array $products): array {
-        $result = [];
-
-        foreach($products as $product){
-
-            $brandName = $product->getBrand()->getName();
-
-            if(!array_key_exists($brandName, $result) || $result[$brandName]['sellCount'] < $product->getSellCount()){
-                $result[$brandName] = [
-                    'product' => $product->getName(),
-                    'sellCount' => $product->getSellCount()
-                ];
-            }
-        }
-
-        return $result;
+    public function getMostSoldProductPerBrands(): array {
+        return $this->em->getRepository(Product::class)->getMostSoldProducstPerBrand();
     }
 
     /**
