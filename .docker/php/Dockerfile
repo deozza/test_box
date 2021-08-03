@@ -1,0 +1,28 @@
+FROM php:7.3-fpm
+
+RUN apt-get update \
+    && apt-get install -y libzip-dev zip libcurl4-openssl-dev pkg-config libssl-dev gnupg
+
+RUN set -xe \
+    && docker-php-ext-install zip
+
+RUN pecl install apcu \
+    && docker-php-ext-enable apcu
+
+COPY .docker/php/ini/conf.d/memory_limit.ini /usr/local/etc/php/conf.d
+
+RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls \
+    && mv composer.phar /usr/local/bin/composer
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+RUN mkdir -p /var/www/.composer && chown -R www-data /var/www/.composer
+
+RUN PATH=$PATH:/var/www/test-box/vendor/bin:bin
+
+
+RUN curl -sS https://get.symfony.com/cli/installer | bash
+RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+
+WORKDIR /var/www/test-box
+
+CMD ["php-fpm"]
